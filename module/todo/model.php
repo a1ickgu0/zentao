@@ -109,10 +109,10 @@ class todoModel extends model
     public function update($todoID)
     {
         $oldTodo = $this->getById($todoID);
-        if($oldTodo->type != 'custom') $oldTodo->name = '';
+        /* XXX: if($oldTodo->type != 'custom') $oldTodo->name = ''; */
         $todo = fixer::input('post')
             ->cleanInt('date, pri, begin, end, private')
-            ->setIF($this->post->type  != 'custom', 'name', '')
+            ->setIF($this->post->type  != 'custom', 'name', $oldTodo->name )
             ->setIF($this->post->date  == false, 'date', '2030-01-01')
             ->setIF($this->post->begin == false, 'begin', '2400')
             ->setIF($this->post->end   == false, 'end', '2400')
